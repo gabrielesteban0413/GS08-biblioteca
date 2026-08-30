@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Libri · Biblioteca moderna</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    /* ===== RESET & BASE ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background-color: #f8fafc;
+      color: #0b1a33;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #e9edf2;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #394eff;
+      border-radius: 10px;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      background: #ffffff;
+      padding: 0.8rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #eef2f6;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      color: #0b1a33;
+    }
+
+    .logo i {
+      color: #394eff;
+      font-size: 1.8rem;
+    }
+
+    .logo span {
+      background: linear-gradient(135deg, #0b1a33, #394eff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.2rem;
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: #4a5a72;
+    }
+
+    .nav-links a {
+      transition: color 0.2s;
+    }
+    .nav-links a:hover {
+      color: #394eff;
+    }
+    .nav-links a i {
+      margin-right: 0.4rem;
+      font-size: 0.85rem;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid #394eff;
+      color: #394eff;
+      padding: 0.45rem 1.4rem;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn-outline:hover {
+      background: #394eff;
+      color: #fff;
+    }
+
+    .btn-primary {
+      background: #394eff;
+      border: none;
+      color: #fff;
+      padding: 0.45rem 1.6rem;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn-primary:hover {
+      background: #2a3fd4;
+      transform: scale(1.02);
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      padding: 3.5rem 2.5rem 2.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 3rem;
+    }
+
+    .hero-content {
+      flex: 1 1 400px;
+    }
+
+    .hero-content .badge {
+      display: inline-block;
+      background: #eef3ff;
+      color: #394eff;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.25rem 1rem;
+      border-radius: 40px;
+      letter-spacing: 0.3px;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-content h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      color: #0b1a33;
+      margin-bottom: 1rem;
+    }
+
+    .hero-content h1 span {
+      color: #394eff;
+    }
+
+    .hero-content p {
+      font-size: 1.15rem;
+      color: #4a5a72;
+      max-width: 480px;
+      margin-bottom: 2rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+    }
+    .hero-actions .btn-primary {
+      padding: 0.7rem 2.2rem;
+      font-size: 1rem;
+    }
+    .hero-actions .btn-outline {
+      padding: 0.7rem 2rem;
+      font-size: 1rem;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 2.5rem;
+    }
+    .hero-stats .stat {
+      display: flex;
+      flex-direction: column;
+    }
+    .hero-stats .stat .number {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #0b1a33;
+    }
+    .hero-stats .stat .label {
+      font-size: 0.85rem;
+      color: #6a7a92;
+    }
+
+    .hero-visual {
+      flex: 1 1 350px;
+      background: linear-gradient(145deg, #eef3ff, #dce4f5);
+      border-radius: 28px;
+      padding: 1.8rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 40px rgba(57, 78, 255, 0.08);
+      border: 1px solid rgba(57, 78, 255, 0.06);
+    }
+
+    .hero-visual .book-stack {
+      display: flex;
+      gap: 0.8rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .hero-visual .book-stack .book {
+      background: #fff;
+      padding: 0.8rem 1.2rem;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+      border-left: 4px solid #394eff;
+      color: #0b1a33;
+    }
+    .hero-visual .book-stack .book i {
+      color: #394eff;
+      margin-right: 0.4rem;
+    }
+
+    .hero-visual .ticker {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1.5rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #4a5a72;
+    }
+    .hero-visual .ticker span {
+      background: rgba(255, 255, 255, 0.6);
+      padding: 0.2rem 0.8rem;
+      border-radius: 20px;
+    }
+
+    /* ===== SEARCH BAR ===== */
+    .search-section {
+      padding: 1rem 2.5rem 0;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .search-box {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      border: 1px solid #eef2f6;
+      border-radius: 60px;
+      padding: 0.2rem 0.2rem 0.2rem 1.8rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+      transition: 0.3s;
+    }
+    .search-box:focus-within {
+      border-color: #394eff;
+      box-shadow: 0 4px 16px rgba(57, 78, 255, 0.08);
+    }
+    .search-box input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      padding: 0.9rem 0;
+      font-size: 1rem;
+      color: #0b1a33;
+      outline: none;
+    }
+    .search-box input::placeholder {
+      color: #a0b0c4;
+    }
+    .search-box button {
+      background: #394eff;
+      border: none;
+      color: #fff;
+      padding: 0.6rem 1.8rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .search-box button:hover {
+      background: #2a3fd4;
+    }
+
+    /* ===== CATEGORÍAS ===== */
+    .categories {
+      padding: 1.5rem 2.5rem 0.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem 1.2rem;
+    }
+    .categories .pill {
+      background: #fff;
+      border: 1px solid #eef2f6;
+      padding: 0.4rem 1.4rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      color: #4a5a72;
+      transition: 0.2s;
+      cursor: default;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.01);
+    }
+    .categories .pill:hover {
+      border-color: #394eff;
+      color: #394eff;
+      background: #f5f7ff;
+    }
+    .categories .pill i {
+      margin-right: 0.4rem;
+      color: #394eff;
+    }
+
+    /* ===== GRID DE LIBROS ===== */
+    .library-grid {
+      padding: 2rem 2.5rem 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.8rem;
+    }
+    .section-header h2 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #0b1a33;
+    }
+    .section-header a {
+      color: #394eff;
+      font-weight: 500;
+    }
+    .section-header a i {
+      margin-left: 0.3rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 1.8rem;
+    }
+
+    .book-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 1.2rem 1rem 1.4rem;
+      border: 1px solid #eef2f6;
+      transition: transform 0.25s ease, box-shadow 0.3s;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    }
+    .book-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 30px rgba(57, 78, 255, 0.07);
+      border-color: #394eff;
+    }
+
+    .book-cover {
+      width: 100%;
+      aspect-ratio: 2 / 3;
+      background: linear-gradient(145deg, #f0f4fe, #dce4f5);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.8rem;
+      color: #394eff;
+      margin-bottom: 0.8rem;
+      border: 1px solid rgba(57, 78, 255, 0.06);
+      transition: 0.3s;
+    }
+    .book-card:hover .book-cover {
+      background: linear-gradient(145deg, #e5ebfc, #c8d4f0);
+    }
+
+    .book-title {
+      font-weight: 600;
+      font-size: 0.95rem;
+      line-height: 1.3;
+      color: #0b1a33;
+    }
+    .book-author {
+      font-size: 0.8rem;
+      color: #6a7a92;
+      margin: 0.2rem 0 0.4rem;
+    }
+    .book-meta {
+      display: flex;
+      gap: 0.8rem;
+      font-size: 0.75rem;
+      color: #8a9aaa;
+    }
+    .book-meta i {
+      margin-right: 0.2rem;
+    }
+    .book-status {
+      margin-top: 0.6rem;
+      font-size: 0.7rem;
+      background: #eef3ff;
+      padding: 0.2rem 1rem;
+      border-radius: 30px;
+      color: #394eff;
+      font-weight: 600;
+    }
+
+    /* ===== FEATURES ===== */
+    .features {
+      padding: 2rem 2.5rem 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+    .feature-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 1.8rem 1.5rem;
+      border: 1px solid #eef2f6;
+      transition: 0.25s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    }
+    .feature-card:hover {
+      border-color: #394eff;
+      box-shadow: 0 8px 24px rgba(57, 78, 255, 0.06);
+      transform: translateY(-4px);
+    }
+    .feature-card .icon {
+      font-size: 2rem;
+      color: #394eff;
+      margin-bottom: 0.8rem;
+    }
+    .feature-card h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+      color: #0b1a33;
+    }
+    .feature-card p {
+      font-size: 0.9rem;
+      color: #6a7a92;
+    }
+
+    /* ===== CTA ===== */
+    .cta-section {
+      background: #0b1a33;
+      padding: 3.5rem 2.5rem;
+      text-align: center;
+      border-radius: 32px;
+      max-width: 1000px;
+      margin: 0 auto 4rem;
+    }
+    .cta-section h2 {
+      color: #fff;
+      font-size: 2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    .cta-section p {
+      color: #a0b8d0;
+      font-size: 1.05rem;
+      max-width: 500px;
+      margin: 0 auto 1.8rem;
+    }
+    .cta-section .btn-primary {
+      background: #394eff;
+      padding: 0.8rem 2.8rem;
+      font-size: 1rem;
+    }
+    .cta-section .btn-primary:hover {
+      background: #5a6eff;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      padding: 1.8rem 2.5rem;
+      border-top: 1px solid #eef2f6;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: #6a7a92;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    footer .socials {
+      display: flex;
+      gap: 1.2rem;
+    }
+    footer .socials a {
+      color: #6a7a92;
+      transition: 0.2s;
+    }
+    footer .socials a:hover {
+      color: #394eff;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      header {
+        padding: 0.8rem 1.2rem;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+      }
+      .nav-links {
+        gap: 1.2rem;
+        font-size: 0.85rem;
+        flex-wrap: wrap;
+      }
+      .header-actions {
+        gap: 0.6rem;
+      }
+      .btn-outline, .btn-primary {
+        font-size: 0.8rem;
+        padding: 0.35rem 1rem;
+      }
+      .hero {
+        padding: 2rem 1.2rem;
+        flex-direction: column;
+        text-align: center;
+      }
+      .hero-content h1 {
+        font-size: 2.2rem;
+      }
+      .hero-content p {
+        max-width: 100%;
+      }
+      .hero-actions {
+        justify-content: center;
+      }
+      .hero-stats {
+        justify-content: center;
+        gap: 1.5rem;
+      }
+      .hero-visual {
+        width: 100%;
+      }
+      .search-section {
+        padding: 1rem 1.2rem 0;
+      }
+      .search-box {
+        flex-wrap: wrap;
+        background: transparent;
+        border: none;
+        padding: 0;
+        gap: 0.6rem;
+        box-shadow: none;
+      }
+      .search-box input {
+        background: #fff;
+        border-radius: 60px;
+        padding: 0.9rem 1.5rem;
+        border: 1px solid #eef2f6;
+        width: 100%;
+      }
+      .search-box button {
+        width: 100%;
+        justify-content: center;
+        padding: 0.7rem;
+      }
+      .categories {
+        padding: 1rem 1.2rem 0.5rem;
+        justify-content: center;
+      }
+      .library-grid {
+        padding: 1.5rem 1.2rem;
+      }
+      .grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 1rem;
+      }
+      .features {
+        padding: 1.5rem 1.2rem;
+      }
+      .cta-section {
+        margin: 0 1.2rem 2.5rem;
+        padding: 2.5rem 1.5rem;
+      }
+      .cta-section h2 {
+        font-size: 1.6rem;
+      }
+      footer {
+        flex-direction: column;
+        gap: 0.8rem;
+        text-align: center;
+        padding: 1.5rem 1.2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-content h1 {
+        font-size: 1.8rem;
+      }
+      .hero-stats .stat .number {
+        font-size: 1.3rem;
+      }
+      .grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="logo">
+      <i class="fas fa-book-open"></i>
+      <span>Libri</span>
+    </div>
+    <div class="nav-links">
+      <a href="#"><i class="fas fa-search"></i>Catálogo</a>
+      <a href="#"><i class="fas fa-star"></i>Favoritos</a>
+      <a href="#"><i class="fas fa-calendar-alt"></i>Eventos</a>
+      <a href="#"><i class="fas fa-user"></i>Mi cuenta</a>
+    </div>
+    <div class="header-actions">
+      <button class="btn-outline">Iniciar sesión</button>
+      <button class="btn-primary">Regístrate</button>
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="badge"><i class="fas fa-gem"></i> Nuevo · Club de lectura</div>
+      <h1>Tu biblioteca digital <span>siempre abierta</span></h1>
+      <p>Miles de libros, revistas y audiolibros a un clic. Descubre, aprende y comparte.</p>
+      <div class="hero-actions">
+        <button class="btn-primary"><i class="fas fa-arrow-right"></i> Explorar ahora</button>
+        <button class="btn-outline"><i class="fas fa-play-circle"></i> Ver tour</button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="number">+12k</span>
+          <span class="label">Libros disponibles</span>
+        </div>
+        <div class="stat">
+          <span class="number">240</span>
+          <span class="label">Eventos al mes</span>
+        </div>
+        <div class="stat">
+          <span class="number">4.9★</span>
+          <span class="label">Valoración</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="book-stack">
+        <div class="book"><i class="fas fa-book"></i> Cien años...</div>
+        <div class="book"><i class="fas fa-book"></i> 1984</div>
+        <div class="book"><i class="fas fa-book"></i> El Principito</div>
+        <div class="book"><i class="fas fa-book"></i> La sombra...</div>
+      </div>
+      <div class="ticker">
+        <span><i class="fas fa-star" style="color: #f5b342;"></i> Más leídos</span>
+        <span><i class="fas fa-clock"></i> Novedades</span>
+        <span><i class="fas fa-fire"></i> Tendencia</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BÚSQUEDA ===== -->
+  <div class="search-section">
+    <div class="search-box">
+      <input type="text" placeholder="Buscar por título, autor o género..." />
+      <button><i class="fas fa-search"></i> Buscar</button>
+    </div>
+  </div>
+
+  <!-- ===== CATEGORÍAS ===== -->
+  <div class="categories">
+    <span class="pill"><i class="fas fa-robot"></i> Ciencia ficción</span>
+    <span class="pill"><i class="fas fa-heart"></i> Romance</span>
+    <span class="pill"><i class="fas fa-skull"></i> Misterio</span>
+    <span class="pill"><i class="fas fa-history"></i> Historia</span>
+    <span class="pill"><i class="fas fa-chart-line"></i> Negocios</span>
+    <span class="pill"><i class="fas fa-child"></i> Infantil</span>
+  </div>
+
+  <!-- ===== GRID DE LIBROS ===== -->
+  <section class="library-grid">
+    <div class="section-header">
+      <h2><i class="fas fa-fire" style="color: #394eff;"></i> Más populares</h2>
+      <a href="#">Ver todos <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="grid">
+      <!-- Libro 1 -->
+      <div class="book-card">
+        <div class="book-cover"><i class="fas fa-book"></i></div>
+        <div class="book-title">Cien años de soledad</div>
+        <div class="book-author">Gabriel G. Márquez</div>
+        <div class="book-meta">
+          <span><i class="far fa-calendar-alt"></i> 1967</span>
+          <span><i class="fas fa-language"></i> ES</span>
+        </div>
+        <div class="book-status">Disponible</div>
+      </div>
+      <!-- Libro 2 -->
+      <div class="book-card">
+        <div class="book-cover"><i class="fas fa-robot"></i></div>
+        <div class="book-title">Fundación</div>
+        <div class="book-author">Isaac Asimov</div>
+        <div class="book-meta">
+          <span><i class="far fa-calendar-alt"></i> 1951</span>
+          <span><i class="fas fa-language"></i> EN</span>
+        </div>
+        <div class="book-status">Préstamo</div>
+      </div>
+      <!-- Libro 3 -->
+      <div class="book-card">
+        <div class="book-cover"><i class="fas fa-mask"></i></div>
+        <div class="book-title">El nombre del viento</div>
+        <div class="book-author">Patrick Rothfuss</div>
+        <div class="book-meta">
+          <span><i class="far fa-calendar-alt"></i> 2007</span>
+          <span><i class="fas fa-language"></i> EN</span>
+        </div>
+        <div class="book-status">Disponible</div>
+      </div>
+      <!-- Libro 4 -->
+      <div class="book-card">
+        <div class="book-cover"><i class="fas fa-brain"></i></div>
+        <div class="book-title">Sapiens</div>
+        <div class="book-author">Yuval N. Harari</div>
+        <div class="book-meta">
+          <span><i class="far fa-calendar-alt"></i> 2011</span>
+          <span><i class="fas fa-language"></i> ES</span>
+        </div>
+        <div class="book-status">Disponible</div>
+      </div>
+      <!-- Libro 5 -->
+      <div class="book-card">
+        <div class="book-cover"><i class="fas fa-dragon"></i></div>
+        <div class="book-title">Juego de tronos</div>
+        <div class="book-author">George R. R. Martin</div>
+        <div class="book-meta">
+          <span><i class="far fa-calendar-alt"></i> 1996</span>
+          <span><i class="fas fa-language"></i> EN</span>
+        </div>
+        <div class="book-status">Préstamo</div>
+      </div>
+      <!-- Libro 6 -->
+      <div class="book-card">
+        <div class="book-cover"><i class="fas fa-globe"></i></div>
+        <div class="book-title">El mundo y sus demonios</div>
+        <div class="book-author">Carl Sagan</div>
+        <div class="book-meta">
+          <span><i class="far fa-calendar-alt"></i> 1995</span>
+          <span><i class="fas fa-language"></i> ES</span>
+        </div>
+        <div class="book-status">Disponible</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FEATURES (servicios) ===== -->
+  <section class="features">
+    <div class="section-header">
+      <h2><i class="fas fa-cogs" style="color: #394eff;"></i> Servicios</h2>
+      <a href="#">Más info <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="icon"><i class="fas fa-book-reader"></i></div>
+        <h3>Préstamo digital</h3>
+        <p>Lleva libros electrónicos y audiolibros a tu dispositivo favorito.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon"><i class="fas fa-users"></i></div>
+        <h3>Clubes de lectura</h3>
+        <p>Únete a grupos por género y comparte tus impresiones.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon"><i class="fas fa-calendar-check"></i></div>
+        <h3>Eventos culturales</h3>
+        <p>Charlas, presentaciones y talleres con autores invitados.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon"><i class="fas fa-magic"></i></div>
+        <h3>Recomendaciones</h3>
+        <p>Algoritmo inteligente que sugiere libros según tus gustos.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <div class="cta-section">
+    <h2>Únete a la comunidad lectora</h2>
+    <p>Regístrate gratis y accede a todo el catálogo, eventos y más.</p>
+    <button class="btn-primary"><i class="fas fa-user-plus"></i> Crear cuenta gratis</button>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <span>&copy; 2026 Libri · Biblioteca moderna</span>
+    <div class="socials">
+      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+      <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    </div>
+  </footer>
+
+  <!-- ===== SCRIPTS (demo) ===== -->
+  <script>
+    document.querySelector('.search-box button').addEventListener('click', function(e) {
+      e.preventDefault();
+      const input = document.querySelector('.search-box input');
+      const query = input.value.trim();
+      if (query) {
+        alert(`Buscando: "${query}"\n(Simulación de búsqueda en la biblioteca)`);
+      } else {
+        alert('Escribe el título o autor que buscas.');
+      }
+    });
+
+    document.querySelector('.search-box input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        document.querySelector('.search-box button').click();
+      }
+    });
+  </script>
+</body>
+</html>
