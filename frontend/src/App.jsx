@@ -16,6 +16,10 @@ import Shelf from './pages/Shelf'
 import Events from './pages/Events'
 import Favorites from './pages/Favorites'
 import Cart from './pages/Cart'
+import Admin from './pages/Admin'
+import Employee from './pages/Employee'
+import ProtectedRoute from './components/ProtectedRoute'
+import { useAuth } from './context/AuthContext'
 
 export default function App(){
   return (
@@ -30,6 +34,8 @@ export default function App(){
         <Route path="events" element={<Events/>} />
         <Route path="favorites" element={<Favorites/>} />
         <Route path="cart" element={<Cart/>} />
+        <Route path="admin" element={<ProtectedRoute auth={useAuth().auth} requiredRoles={["ADMIN"]}><Admin/></ProtectedRoute>} />
+        <Route path="employee" element={<ProtectedRoute auth={useAuth().auth} requiredRoles={["EMPLOYEE"]}><Employee/></ProtectedRoute>} />
         <Route path="login" element={<Login />} />
         <Route path="terms" element={<Terms />} />
         <Route path="privacy" element={<Privacy />} />
