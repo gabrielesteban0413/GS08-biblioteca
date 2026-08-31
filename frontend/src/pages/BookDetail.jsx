@@ -1,4 +1,5 @@
 import React from 'react'
+import Button from '../components/ui/Button.jsx'
 
 export default function BookDetail(){
   return (
@@ -14,8 +15,8 @@ export default function BookDetail(){
           <p className="lead">Autor — 2020 · Novela</p>
           <p>Descripción larga del libro: resumen profesional y ganchos para el lector. Aquí puedes pegar el texto del editor.</p>
           <div style={{display:'flex',gap:12,marginTop:16}}>
-            <button className="btn-primary">Leer ahora</button>
-            <button className="btn-outline">Agregar a mi estantería</button>
+            <Button type="button">Leer ahora</Button>
+            <Button variant="outline" type="button">Agregar a mi estantería</Button>
           </div>
         </div>
       </div>

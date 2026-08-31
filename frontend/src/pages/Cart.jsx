@@ -1,5 +1,6 @@
 import React from 'react'
 import { useCart } from '../context/CartContext.jsx'
+import Button from '../components/ui/Button.jsx'
 
 export default function Cart(){
   const { items, removeItem, clear } = useCart()
@@ -18,13 +19,13 @@ export default function Cart(){
                 <div style={{color:'#6a7a92'}}>{it.author || ''}</div>
               </div>
               <div style={{display:'flex',gap:8}}>
-                <button className="btn-outline" onClick={()=>removeItem(idx)}>Quitar</button>
+                <Button variant="outline" onClick={()=>removeItem(idx)}>Quitar</Button>
               </div>
             </div>
           ))}
           <div style={{display:'flex',justifyContent:'flex-end',gap:12}}>
-            <button className="btn-outline" onClick={clear}>Vaciar carrito</button>
-            <button className="btn-primary">Proceder al pago</button>
+            <Button variant="outline" onClick={clear}>Vaciar carrito</Button>
+            <Button>Proceder al pago</Button>
           </div>
         </div>
       )}
